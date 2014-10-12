@@ -7,27 +7,29 @@ import (
 )
 
 type Queue struct {
-  id   uint64
-  name string
+  Name  string
+}
+
+type QueueInfo struct {
+  Id                string
+  Discipline        string  // FIFO, LIFO, Proc sharing, Priority, Shortest job first...
+  IsPreemptive      bool    // Client without priority exit and wait
+  PreservePosition  bool    // If IsPreemptive the client can get to his older position
+}
+
+
+func New(queueName string) *Queue {
+  // @TODO Should we allow queues without a Name?
+  return &Queue{Name: queueName}
 }
 
 // Implement as a Stringer
 func (q Queue) String() string {
-  return fmt.Sprintf("Id %v | Name %v", q.id, q.name)
+  return fmt.Sprintf("Id %v", q.Name)
 }
 
-// Helpers
-func NewQueue(id uint64, name string) Queue {
-  // @TODO Should we allow queues without a Name?
-  return Queue{id, name}
-}
-
-func (q *Queue) DrawQueue() uint64 {
-  fmt.Println("My Id is:   ", q.id)
-  fmt.Println("My Name is: ", q.name)
+/*func (q *Queue) DrawQueue() uint64 {
+  //fmt.Println("My Id is:   ", q.id)
+  fmt.Println("My Name is: ", q.Name)
   return q.id
-}
-
-func (q *Queue) Setid(id uint64) {
-  q.id = id
-}
+}*/
