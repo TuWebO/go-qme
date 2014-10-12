@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"	
-	"github.com/TuWebO/go-qme/qs"
+	"fmt"
+	"github.com/TuWebO/go-qme/qq"
 )
 
 func main() {
@@ -11,18 +11,18 @@ func main() {
 	fmt.Printf("=======================================================\n\n\n\n")
 
 	// Creates and draw a queue
-	// q := qs.NewQueue(1,"\"La cola de Agustín\"")
+	// q := qq.NewQueue(1,"\"La cola de Agustín\"")
 	// q.DrawQueue()
-	
+
 	// Creates a slice of queues and draw them
-	queues := []qs.Queue{qs.NewQueue(1,"Cola 1"), qs.NewQueue(2, "Cola 2")}
+	queues := []qq.Queue{qq.NewQueue(1,"Cola 1"), qq.NewQueue(2, "Cola 2")}
 	fmt.Printf("Draw a list of current queues\n")
 	fmt.Printf("=============================\n")
 	for i := 0; i < len(queues); i++ {
 		queues[i].DrawQueue()
 		fmt.Printf("------------\n")
 	}
-	
+
 	fmt.Printf("\n\n")
 	
 	// Implements Stringer
@@ -32,9 +32,9 @@ func main() {
 		fmt.Println(queues[i])
 		fmt.Printf("------------\n")
 	}
-	
+
 	fmt.Printf("\n\n")
-	
+
 	// Implements Set method
 	fmt.Printf("Implements Set method\n")
 	fmt.Printf("=====================\n")
