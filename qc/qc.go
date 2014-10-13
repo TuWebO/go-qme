@@ -2,5 +2,5 @@
 package qc
 
 type Client struct {
-  Id string
+	Id string
 }
