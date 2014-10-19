@@ -2,9 +2,11 @@
 package qs
 
 import (
-	"fmt"
-	//"github.com/TuWebO/go-qme/qq"
+	//"fmt"
+	"github.com/TuWebO/go-qme/qq"
 )
+
+
 
 type Qsystem struct {
 	Id              uint
@@ -15,7 +17,7 @@ type Qsystem struct {
 	Mi              int       // (μ) Number of services by unit time (if the service is occupied)
 	Rho             int       // (ρ) System congestion
 	Services        []Service // Service
-	ClientCapacity  int       // Number of clients a system could have
+	ClientCapacity  int       // Number of clients a system can hold
 }
 
 // A service has servers (channels). As a matter of rule, these servers will run on
@@ -27,10 +29,11 @@ type Service struct {
 	Id       string
 	IsActive bool
 	Servers  []Server
-	//Queues   []Queue
 }
 
 type Server struct {
 	Id       string
 	IsActive bool
+	Queues   []qq.Queue
 }
+
