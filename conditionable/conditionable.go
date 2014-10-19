@@ -1,7 +1,6 @@
-package main
+package conditionable
 
 import (
-	"fmt"
 	"strconv"
 )
 
@@ -14,11 +13,30 @@ func GetConditionable(c *Condition, ci Conditionable) bool {
 }
 
 type Condition struct {
-	Key			string
-	Value		string
-	IsMandatory bool
+	key			string
+	value		string
+	isMandatory bool
 }
 
+func (c *Condition) Key() string {
+	return c.key
+}
+
+func (c *Condition) Value() string {
+	return c.value
+}
+
+func (c *Condition) ValueInt() int {
+	intval, e := strconv.Atoi(c.value)
+	if (e != nil) {
+		panic("Condition can't convert to int in ValueInt")
+	}
+	return intval
+}
+
+func (c *Condition) IsMandatory() bool {
+	return c.isMandatory
+}
 /*type SupermarketCashier struct {
 	Conds	    map[string]Condition
 }

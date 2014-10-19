@@ -3,10 +3,9 @@ package qs
 
 import (
 	//"fmt"
+	"github.com/TuWebO/go-qme/conditionable"
 	"github.com/TuWebO/go-qme/qq"
 )
-
-
 
 type Qsystem struct {
 	Id              uint
@@ -18,6 +17,14 @@ type Qsystem struct {
 	Rho             int       // (ρ) System congestion
 	Services        []Service // Service
 	ClientCapacity  int       // Number of clients a system can hold
+}
+
+func (s *Qsystem) PassRequirement(c *conditionable.Condition) bool {
+	switch c.Key() {
+	case "ClientCapacity":
+		return s.ClientCapacity >= c.ValueInt()
+	}
+	return false
 }
 
 // A service has servers (channels). As a matter of rule, these servers will run on
