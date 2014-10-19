@@ -6,10 +6,11 @@ import (
 )
 
 type Conditionable interface {
-	// Validate(c1, c2 Condition) 			bool
-	Conditions()		 	   		map[string]Condition
-	HasCondition(condKey string)	bool
-	ConditionValidates(Condition) 	bool
+	PassRequirement(*Condition) bool
+}
+
+func GetConditionable(c *Condition, ci Conditionable) bool {
+	return ci.PassRequirement(c)
 }
 
 type Condition struct {
@@ -18,49 +19,29 @@ type Condition struct {
 	IsMandatory bool
 }
 
-type SupermarketCashier struct {
-	MaxItems 	int
-	IsActive 	int
+/*type SupermarketCashier struct {
 	Conds	    map[string]Condition
 }
 
-func (s *SupermarketCashier) Conditions() map[string]Condition {
-	return s.Conds
-}
-
-func (s *SupermarketCashier) HasCondition(key string) bool {
-	if s.Conds[key].Key == key {
-		return true
-	}
-	return false
-}
-
-func (s *SupermarketCashier) ConditionValidates(c Condition) bool {
+func (s *SupermarketCashier) PassRequirement(c *Condition) bool {
 	validates := false
-	if !c.IsMandatory {
-		return true
-	} else if  s.HasCondition(c.Key) {
-		switch c.Key {
-		case "MaxItems":
-			sval, e1 := strconv.Atoi(s.Conds[c.Key].Value)
-			cval, e2 := strconv.Atoi(c.Value)
-			if e1 != nil || e2 != nil {				
-				validates = false
-			} else {
-				validates = sval >= cval
-			}
-		case "IsActive":
-			validates = s.Conds[c.Key].Value == "1"
+	switch c.Key {
+	case "MaxItems":
+		sval, e1 := strconv.Atoi(s.Conds[c.Key].Value)
+		cval, e2 := strconv.Atoi(c.Value)
+		if e1 != nil || e2 != nil {				
+			validates = false
+		} else {
+			validates = sval >= cval
 		}
+	case "IsActive":
+		validates = s.Conds[c.Key].Value == "1"
 	}
-
 	return validates
 }
 
 func main() {
 	super := new(SupermarketCashier)
-	super.MaxItems = 5
-	super.IsActive = 1
 	
 	var cond1 Condition
 	cond1.Key = "IsActive"
@@ -74,20 +55,16 @@ func main() {
 	
 	var condClient Condition
 	condClient.Key = "MaxItems"
-	condClient.Value = "8"
+	condClient.Value = "10"
 	condClient.IsMandatory = true
 	
 	super.Conds = make(map[string]Condition)
 	super.Conds[cond1.Key] = cond1
 	super.Conds[cond2.Key] = cond2
 	
-	fmt.Println("Super conditions: ", super.Conditions())
-	fmt.Println("Client condition: ", condClient)
-	
-	fmt.Println("Super has cond1: ", super.HasCondition(cond1.Key))
-	fmt.Println("Super has cond2: ", super.HasCondition(cond2.Key))
-	fmt.Println("Super has condClient: ", super.HasCondition(condClient.Key))
-	
-	fmt.Println("Super validates cond1: ", super.ConditionValidates(cond1))
-	fmt.Println("Super has condClient: ", super.ConditionValidates(condClient))
-}
+	if GetConditionable(&condClient, super) {
+		fmt.Println("client can access to super")
+	} else {
+		fmt.Println("client can't access to super")
+	}
+}*/
